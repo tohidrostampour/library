@@ -1,6 +1,6 @@
 # testGit
 
-THIS REPOSITORY IS JUST FOR TESTING THE GIT.
+THIS REPOSITORY IS JUST FOR TESTING THE GIT and github.
 
 for contributing, first pull the project then make your changes and finally push them to the code base.
 
