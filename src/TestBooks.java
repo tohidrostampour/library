@@ -18,7 +18,7 @@ public class TestBooks {
                     System.out.println("We have it");
                     System.out.println(books.booksDb.get(i).toString());
                 }
-            }if System.out.println("Sorry we don't have this book.");
+            }
         }
     }
 }
