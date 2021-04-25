@@ -14,8 +14,11 @@ public class TestBooks {
             System.out.printf("Enter the books name ");
             String book = in.nextLine();
             for (int i = 0; i < books.booksDb.size(); i++) {
-
-            }
+                if(books.booksDb.get(i).getName().equals(book)){
+                    System.out.println("We have it");
+                    System.out.println(books.booksDb.get(i).toString());
+                }
+            }if System.out.println("Sorry we don't have this book.");
         }
     }
 }
