@@ -15,7 +15,7 @@ public class BooksDB {
     public static int getAllBooks() {
         int total=0;
         for(int i=0;i<booksDb.size();i++){
-            total += i;
+            total += 1;
         }
         return total;
     }

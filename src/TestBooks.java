@@ -16,27 +16,33 @@ public class TestBooks {
 
             switch (operation) {
                 case "-search": {
-                    System.out.printf("Enter the books name ");
+                    System.out.print("Enter the books name ");
                     String book = in.nextLine();
-                    search(book);
+                    if (have(book)) {
+                        System.out.println("We have it. You can borrow it by -get");
+                    } else System.out.println("Sorry we're out.");
+                    System.out.println();
                     break;
                 }
                 case "-book": {
-                    System.out.printf("Enter the books name ");
+                    System.out.print("Enter the books name ");
                     String book = in.nextLine();
-                    getBook(book);
+                    if (have(book)) {
+                        getBook(book);
+                    }
                     break;
                 }
                 case "-all":
                     System.out.println("We have: ");
                     allBooks();
                     break;
+
                 case "-get":
                     System.out.println("Please enter your ID and password : ");
                     System.out.print("ID: ");
-                    int id = in.nextInt();
+                    long id = in.nextLong();
                     System.out.print("Password: ");
-                    int password = in.nextInt();
+                    long password = in.nextLong();
                     if (checkUser(id, password)) {
                         Scanner inp = new Scanner(System.in);
                         System.out.print("What book do you want? ");
@@ -45,6 +51,7 @@ public class TestBooks {
                             System.out.println("Here is your book. ");
                             get(book);
                             System.out.println();
+                            break;
                         }
                     } else {
                         System.out.println("You are not member of the library. please sign up: ");
@@ -53,10 +60,10 @@ public class TestBooks {
                         System.out.println("Lastname: ");
                         String lname = in.next();
                         System.out.println("NationalCode: (must be 10 digit) ");
-                        int nc = in.nextInt();
-                        Person p1 = new Person(name, lname, nc, (nc / 1000) + 1000);
+                        long nc = in.nextLong();
+                        Person p1 = new Person(name, lname, nc, (nc / 1000000) + 1000);
                         PersonDB.personDB.add(p1);
-                        System.out.println("Thanks your ID is the last four digit of your national code and your password is your nc. ");
+                        System.out.println("Thanks your ID is "+((nc/1000000)+1000)+" and your password is your nc. ");
                         System.out.println();
                         System.out.print("What book do you want? ");
                         Scanner inp = new Scanner(System.in);
@@ -66,15 +73,14 @@ public class TestBooks {
                             get(book);
                         }
                     }
-
                     break;
             }
         } while (!operation.equals("-q"));
     }
 
-    public static boolean checkUser(int ID, int password) {
+    public static boolean checkUser(long ID, long password) {
         boolean flag = false;
-        for (int i = 0; i < BooksDB.booksDb.size()-1; i++) {
+        for (int i = 0; i < BooksDB.booksDb.size() - 1; i++) {
             flag = PersonDB.personDB.get(i).getUsername() == ID && PersonDB.personDB.get(i).getNc() == password;
             break;
         }
@@ -91,7 +97,7 @@ public class TestBooks {
         return flag;
     }
 
-    public static void search(String book) {
+    /*public static void search(String book) {
         boolean have = false;
         for (int i = 0; i < BooksDB.booksDb.size(); i++) {
             if (BooksDB.booksDb.get(i).getName().equals(book)) {
@@ -103,36 +109,43 @@ public class TestBooks {
             System.out.println("Sorry we're out.");
             System.out.println();
         }
-    }
+    }*/
+
 
     public static void getBook(String book) {
-        search(book);
-        boolean have = false;
+        if (have(book)) {
+            System.out.println("We have it");
+            System.out.println(bookInfo(book));
+        } else System.out.println("Sorry we're out.");
+        System.out.println();
+    }
+
+    public static String bookInfo(String book) {
+        String info = "";
         for (int i = 0; i < BooksDB.booksDb.size(); i++) {
             if (BooksDB.booksDb.get(i).getName().equals(book)) {
-                System.out.println("We have it");
-                System.out.println(BooksDB.booksDb.get(i).toString());
-                have = true;
+                info += BooksDB.booksDb.get(i).toString();
+                break;
             }
         }
-        if (!have) {
-            System.out.println("Sorry we're out.");
-        }
-        System.out.println();
+        return info;
     }
 
     public static void allBooks() {
         for (int i = 0; i < BooksDB.booksDb.size(); i++) {
             System.out.println(BooksDB.booksDb.get(i).getName());
-
         }
+        System.out.println();
         System.out.println("Total Books: " + BooksDB.getAllBooks());
+        System.out.println();
     }
 
     public static void get(String book) {
         for (int i = 0; i < BooksDB.booksDb.size(); i++) {
-            if (BooksDB.booksDb.get(i).getName().equals(book)) {
+            if (BooksDB.booksDb.get(i).getName().equals(book)&&BooksDB.booksDb.get(i).getQuantity()>0) {
                 BooksDB.booksDb.get(i).setQuantity(BooksDB.booksDb.get(i).getQuantity() - 1);
+            }else if(BooksDB.booksDb.get(i).getQuantity()<0){
+                System.out.println("Sorry we just finished that book.");
             }
         }
     }

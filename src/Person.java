@@ -2,10 +2,10 @@ public class Person {
     private String fname;
     private String lname;
     private long nc;
-    private int username;
+    private long username;
 
 
-    public Person(String fname, String lname, long nc, int username) {
+    public Person(String fname, String lname, long nc, long username) {
         this.fname = fname;
         this.lname = lname;
         this.username = username;
@@ -17,7 +17,7 @@ public class Person {
         return nc;
     }
 
-    public int getUsername() {
+    public long getUsername() {
         return username;
     }
 
