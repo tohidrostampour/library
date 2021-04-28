@@ -38,12 +38,13 @@ public class TestBooks {
                     break;
 
                 case "-get":
-                    System.out.println("Please enter your ID and password : ");
-                    System.out.print("ID: ");
-                    long id = in.nextLong();
+                    System.out.println("Please enter your username and password : ");
+                    System.out.print("Username: ");
+                    long username = in.nextLong();
                     System.out.print("Password: ");
                     long password = in.nextLong();
-                    if (checkUser(id, password)) {
+                    if (checkUser(username, password)) {
+                        System.out.println("!!haveuser");
                         Scanner inp = new Scanner(System.in);
                         System.out.print("What book do you want? ");
                         String book = inp.nextLine();
@@ -54,6 +55,7 @@ public class TestBooks {
                             break;
                         }
                     } else {
+                        System.out.println("!!Dont have user");
                         System.out.println("You are not member of the library. please sign up: ");
                         System.out.println("Firstname: ");
                         String name = in.next();
@@ -78,13 +80,12 @@ public class TestBooks {
         } while (!operation.equals("-q"));
     }
 
-    public static boolean checkUser(long ID, long password) {
-        boolean flag = false;
-        for (int i = 0; i < BooksDB.booksDb.size() - 1; i++) {
-            flag = PersonDB.personDB.get(i).getUsername() == ID && PersonDB.personDB.get(i).getNc() == password;
-            break;
+    public static boolean checkUser(long Username, long password) {
+        for (int i = 0; i < BooksDB.booksDb.size(); i++) {
+            if(PersonDB.personDB.get(i).getUsername() == Username && PersonDB.personDB.get(i).getNc() == password)
+                return true;
         }
-        return flag;
+        return false;
     }
 
     public static boolean have(String book) {
